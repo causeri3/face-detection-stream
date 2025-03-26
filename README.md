@@ -21,9 +21,11 @@ or even better if you use uv:
 uv venv
 uv pip install -r requirements.txt
 ```
+## Run
+ `python stream.py --help`
 
-## Args
-See all arguments : `python main.py --help`
+### Args
+See all arguments : `python stream.py --help`
 
 You can 
 * choose between multiple camera devices
