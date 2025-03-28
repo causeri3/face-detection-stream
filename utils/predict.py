@@ -19,16 +19,16 @@ def convert_to_model_format(frame: np.ndarray):
 
 
 def load_model(repo_name="arnabdhar/YOLOv8-Face-Detection",
-               filename="model.pt"):
+               filename: str = "model.pt"):
     model_path = hf_hub_download(repo_id=repo_name, filename=filename)
     model = YOLO(model_path)
     return model
 
 
-def predict(image,
-            model,
-            return_json=True,
-            return_image=False):
+def predict(image: np.ndarray,
+            model: YOLO,
+            return_json: bool = True,
+            return_image: bool = False):
 
     """Gives object detection for one image from yolo v7 via onnx runtime session
     :param image: Input image in bytes or as np array

@@ -1,18 +1,21 @@
 import cv2
+import numpy as np
 
 _LINE_THICKNESS_SCALING = 500.0
 _TEXT_THICKNESS_SCALING = 700.0
 _TEXT_SCALING = 520.0
-WHITE = (220, 220, 220)
+LIGHT_GREY = (220, 220, 220)
 
 
-def render_box(img, box, color=WHITE):
+def render_box(img: np.ndarray,
+               box: tuple[float, float, float, float],
+               color: tuple[int, int, int] = LIGHT_GREY) -> np.ndarray:
     """
-    Render a box. Calculates scaling and thickness automatically.
-    :param img: image to render into
+    Draws a box on the image with thickness scaled based on image size.
+    :param img: image to draw on
     :param box: (x1, y1, x2, y2) - box coordinates
-    :param color: (b, g, r) - box color
-    :return: updated image
+    :param color: (b, g, r) - box color. Default is white.
+    :return: image with the rendered box.
     """
     x1, y1, x2, y2 = box
     thickness = int(
@@ -32,9 +35,11 @@ def render_box(img, box, color=WHITE):
     return img
 
 
-def get_text_size(img, text, normalised_scaling=1.0):
+def get_text_size(img: np.ndarray,
+                  text: str,
+                  normalised_scaling: float = 1.0) -> tuple[int, int]:
     """
-    Get calculated text size (as box width and height)
+    Calculates the pixel dimensions (width, height) of the text based on image size.
     :param img: image reference, used to determine appropriate text scaling
     :param text: text to display
     :param normalised_scaling: additional normalised scaling. Default 1.0.
@@ -52,15 +57,19 @@ def get_text_size(img, text, normalised_scaling=1.0):
     return cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, scaling, thickness)[0]
 
 
-def render_text(img, text, pos, color=WHITE, normalised_scaling=1.0):
+def render_text(img: np.ndarray,
+                text: str,
+                pos: tuple[float, float],
+                color: tuple[int, int, int] = LIGHT_GREY,
+                normalised_scaling: float = 1.0) -> np.ndarray:
     """
     Render a text into the image. Calculates scaling and thickness automatically.
-    :param img: image to render into
-    :param text: text to display
-    :param pos: (x, y) - upper left coordinates of render position
-    :param color: (b, g, r) - text color
+    :param img: image to draw on.
+    :param text: text to display.
+    :param pos: (x, y) - upper left coordinates of render position.
+    :param color: (b, g, r) - text color. Default white.
     :param normalised_scaling: additional normalised scaling. Default 1.0.
-    :return: updated image
+    :return: image with the rendered text.
     """
     x, y = pos
     thickness = int(

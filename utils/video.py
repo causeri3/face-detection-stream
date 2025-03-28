@@ -6,7 +6,7 @@ from utils.predict import predict, load_model
 
 class Stream:
     def __init__(self,
-                 see_detection = True,
+                 see_detection: bool = True,
                  available_devices: list | None = None):
 
         self.model = load_model()
@@ -34,9 +34,6 @@ class Stream:
 
     @staticmethod
     def choose_device(device_numbers: list):
-        print("HERE")
-        print(device_numbers)
-        print(type(device_numbers))
         if len(device_numbers) < 2:
             return device_numbers[0]
         # default for my preferred set-up (no deeper meaning)

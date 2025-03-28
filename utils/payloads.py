@@ -4,6 +4,7 @@ import logging
 import cv2
 import json
 import numpy as np
+from supervision.detection.core import Detections
 
 class NpEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -16,7 +17,7 @@ class NpEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-def json_payload(detected_objects):
+def json_payload(detected_objects: Detections):
     log_list = ['LABEL', 'CONFIDENCE']
     tags_list = []
     object_list = []
@@ -54,12 +55,14 @@ def json_payload(detected_objects):
     return json.dumps(dict, cls=NpEncoder)
 
 
-def image_payload(detected_objects, image):
+def image_payload(detected_objects: Detections,
+                  image: np.ndarray):
     """
     :param detected_objects:
     :param image: numpy array with three dimensions (height, width, channels)
     :return: images with bounding boxes drawn on, as bytes
     """
+    print("HERE", type(detected_objects))
     log_list = ['LABEL', 'CONFIDENCE']
     output_image = image.copy()
 
