@@ -70,7 +70,6 @@ class Stream:
     def draw_boxes(self):
 
         if not self.available_devices:
-            print("WAHT")
             self.available_devices = self.return_camera_indexes()
 
         device_numbers = self.choose_device(self.available_devices)
