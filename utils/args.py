@@ -14,7 +14,7 @@ def get_args():
                         required=False,
                         action='store_false',
                         help="""See object detection in streamed video output.
-                        If set to False, you only get the json output""")
+                        If set to False, you only get the json payload""")
 
     # to not get into trouble with uvicorn args
     args = parser.parse_known_args()

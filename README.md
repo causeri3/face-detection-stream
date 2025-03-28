@@ -5,8 +5,8 @@ Face detection implemented for camera stream with YOLOv8 trained by [arnabdhar](
 
 ## Dependencies
 ### Python
-I used
-python 3.13
+I used python 3.13
+
 you could peg it with 
 `uv venv --python 3.13`
 but properly not necessary
@@ -16,20 +16,23 @@ You can install them via
 
 `pip install -r requirements.txt`
 
-or even better if you use uv:
+Or even better if you use [uv](https://docs.astral.sh/uv/getting-started/installation/#__tabbed_1_1), run in the directory of this repo:
 ```sh
 uv venv
 uv pip install -r requirements.txt
 ```
 ## Run
- `python stream.py --help`
+* with uv
+ `uv run stream.py`
+
+* standard
+ `python stream.py`
 
 ### Args
 See all arguments : `python stream.py --help`
 
 You can 
 * choose between multiple camera devices
-* choose whether the object detection is in your video or just in the logs
-* choose between an image or json pyload
+* choose whether the object detection is streaming as video or just in the logs - both ways you get a json payload out with the detections
 
 ---
