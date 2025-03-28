@@ -54,19 +54,4 @@ def predict(image,
         logging.debug("One detection event took {:.2f} seconds".format(end_time - start_time))
         return json_output
 
-    if return_image:
-        bytes_output = image_payload(detected_objects, image)
-        end_time = time.time()
-        logging.debug("One detection event took {:.2f} seconds".format(end_time - start_time))
-        return bytes_output
-
-    else:
-        output_bytes = image_payload(detected_objects, image)
-        output_array = np.frombuffer(output_bytes, dtype=np.uint8)
-        output_image = cv2.imdecode(output_array, flags=1)
-        end_time = time.time()
-        logging.info("One detection event took {:.2f} seconds".format(end_time - start_time))
-        cv2.imshow('image', output_image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
 
