@@ -1,4 +1,6 @@
 from utils.payloads import json_payload, image_payload
+from utils.args import get_args
+
 
 import numpy as np
 import logging
@@ -9,6 +11,7 @@ from huggingface_hub import hf_hub_download
 from supervision import Detections
 from PIL import Image
 
+args, unknown = get_args()
 
 def convert_to_model_format(frame: np.ndarray):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -36,7 +39,9 @@ def predict(image,
 
     start_time = time.time()
     pil_image = convert_to_model_format(image)
-    output = model(pil_image)
+    output = model(pil_image,
+                   conf=args.confidence_threshold,
+                   iou=args.iou_threshold)
     detected_objects = Detections.from_ultralytics(output[0])
 
     logging.debug("Detected {} objects".format(len(detected_objects)))

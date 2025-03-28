@@ -29,10 +29,14 @@ uv pip install -r requirements.txt
  `python stream.py`
 
 ### Args
-See all arguments : `python stream.py --help`
+See all arguments:
+* with uv `uv run stream.py --help`
+* standard `python stream.py --help`
+
 
 You can 
 * choose between multiple camera devices
 * choose whether the object detection is streaming as video or just in the logs - both ways you get a json payload out with the detections
-
+* set a confidence threshold
+* set an IoU threshold
 ---
