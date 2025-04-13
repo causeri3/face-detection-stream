@@ -1,5 +1,6 @@
 from utils.payloads import json_payload, image_payload
 from utils.args import get_args
+from utils.track import get_ids
 
 
 import numpy as np
@@ -48,7 +49,9 @@ def predict(image: np.ndarray,
 
     if return_json and return_image:
         json_output = json_payload(detected_objects)
-        bytes_output = image_payload(detected_objects, image)
+        track_ids = get_ids(json_output["bbs"], image)
+        bytes_output = image_payload(detected_objects, image, track_ids)
+
         end_time = time.time()
         logging.debug("One detection event took {:.2f} seconds".format(end_time - start_time))
         return bytes_output, json_output
