@@ -2,14 +2,11 @@
 
 ## Description
 Face detection implemented for camera stream with YOLOv8 trained by [arnabdhar](https://huggingface.co/arnabdhar/YOLOv8-Face-Detection)
+And face tracking implemented with deepsort realtime, using the embedding model clip_RN50x16
 
 ## Dependencies
 ### Python
-I used python 3.13
-
-you could peg it with 
-`uv venv --python 3.13`
-but properly not necessary
+I used python 3.13  - you could peg it with `uv venv --python 3.13` but properly not necessary
 
 ### Python packages 
 You can install them via
