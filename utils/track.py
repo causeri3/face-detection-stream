@@ -15,7 +15,7 @@ def get_ids(bbs: list[tuple[list, float, str]], frame: np.ndarray) -> list:
     ids = []
     for track in tracks:
         if not track.is_confirmed():
-            ids.append("-")
+            ids.append(None)
             continue
         ids.append(track.track_id)
         # ltrb = track.to_ltrb()
