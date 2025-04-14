@@ -5,6 +5,7 @@ _LINE_THICKNESS_SCALING = 500.0
 _TEXT_THICKNESS_SCALING = 700.0
 _TEXT_SCALING = 520.0
 LIGHT_GREY = (220, 220, 220)
+PINK = (255, 51, 255)
 
 
 def render_box(img: np.ndarray,
@@ -91,4 +92,27 @@ def render_text(img: np.ndarray,
         color,
         thickness=thickness,
     )
+    return img
+
+def draw_target_dot(
+    img: np.ndarray,
+    target_coords: tuple[float, float],
+    color: tuple[int, int, int] = PINK) -> np.ndarray:
+    cv2.circle(
+        img,
+        (int(round(target_coords[0])), int(round(target_coords[1]))),
+        radius=10,
+        color=color,
+        thickness=-1  # -1 => filled
+    )
+    return img
+
+def draw_boxes(
+        img: np.ndarray,
+        box: tuple[float, float, float, float],
+        label: str) -> np.ndarray:
+
+    img = render_box(img, box)
+    img = render_text(img, label, (box[0], box[1]))
+
     return img
