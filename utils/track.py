@@ -7,7 +7,7 @@ tracker = DeepSort(
     # clip does not run via my silicon arch, dunno if there is a mps setting, set to true on Windows, see if it works
     embedder_gpu = False)
 
-def get_ids(bbs: tuple[list, float, str], frame: np.ndarray) -> list:
+def get_ids(bbs: list[tuple[list, float, str]], frame: np.ndarray) -> list:
     """
     :param bbs: tuple of ( [left,top,w,h], confidence, detection_class)
     :param frame: np.ndarray"""
@@ -16,7 +16,7 @@ def get_ids(bbs: tuple[list, float, str], frame: np.ndarray) -> list:
     for track in tracks:
         if not track.is_confirmed():
             ids.append("-")
-            #continue
+            continue
         ids.append(track.track_id)
         # ltrb = track.to_ltrb()
     return ids
