@@ -2,15 +2,15 @@ import cv2
 import logging
 import numpy as np
 
-from utils.predict import predict, load_model
+from utils.predict import Predict
 
 class Stream:
     def __init__(self,
                  see_detection: bool = True,
                  available_devices: list | None = None):
 
-        self.model = load_model()
-        self.predict_function = predict
+        self.predict_class = Predict()
+
         self.frame = None
         self.available_devices = available_devices
         self.see_detection = see_detection
@@ -45,22 +45,18 @@ class Stream:
     def predict_n_stream(self):
 
         if self.see_detection:
-            combined_image_bytes, json_payload = self.predict_function(
+            combined_image_bytes, json_payload = self.predict_class.predict(
                 self.frame,
-                self.model,
-                return_image=True,
-                return_json=True)
+                return_image=True)
 
             combined_image_array = np.frombuffer(combined_image_bytes, dtype=np.uint8)
             combined_img = cv2.imdecode(combined_image_array, flags=1)
             return combined_img, json_payload
 
         else:
-            json_payload = self.predict_function(
+            json_payload = self.predict_class.predict(
                 self.frame,
-                self.model,
-                return_image=False,
-                return_json=True)
+                return_image=False)
             return json_payload
 
 
