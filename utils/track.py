@@ -11,7 +11,7 @@ def get_ids(bbs: list[tuple[list, float, str]], frame: np.ndarray) -> list:
     """
     :param bbs: tuple of ( [left,top,w,h], confidence, detection_class)
     :param frame: np.ndarray"""
-    tracks = tracker.update_tracks(bbs, frame=frame) # bbs expected to be a list of detections, each in tuples of ( [left,top,w,h], confidence, detection_class )
+    tracks = tracker.update_tracks(bbs, frame=frame)
     ids = []
     for track in tracks:
         if not track.is_confirmed():
