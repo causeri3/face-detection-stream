@@ -1,15 +1,15 @@
 # Stream Face detection
 
 ## Description
-* **Face detection** implemented for camera stream with YOLOv8 trained by [arnabdhar](https://huggingface.co/arnabdhar/YOLOv8-Face-Detection)
+* **Face detection** implemented for camera stream with YOLOv8 trained on faces by [arnabdhar](https://huggingface.co/arnabdhar/YOLOv8-Face-Detection)
 
-* **Face tracking** implemented with deepsort realtime, using the embedding model clip_RN50x16
+* **Face tracking** implemented with deepsort realtime [Kalman Filter (movement predction) + Hungarian Algorithm (assigment) + embedding model (using clip_RN50x16)]
 
-* **Target Dot Functionality**:
+* **Target Coordinates Functionality**:
 Two states - STARE and BORED
     * BORED: Target point does a random walk (for a certain time).
-    * STARE: Target point centers a detected face bounding box and follos it by its id (for a certain time).
-    * Faces of size > 25% of the screen are always "stared at," regardless of the state.
+    * STARE: Target point centers a detected face bounding box and follows it by its id (for a certain time).
+    * Faces of size > 25% of the screen are always targeted/ "stared at," regardless of the state.
 
 ## Dependencies
 ### Python
