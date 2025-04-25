@@ -33,7 +33,7 @@ class Predict:
 
         self.eyes_target = EyesTarget()
         self.tracker = DeepSort(
-            embedder=embedder_deepsort,
+            #embedder=embedder_deepsort,
             embedder_gpu = embedder_gpu)
 
     def get_object_ids(self,
@@ -87,8 +87,9 @@ class Predict:
         json_output = json_payload(detected_objects)
         track_ids = self.get_object_ids(json_output["bbs"], image)
         [d.update({'id': i}) for d, i in zip(json_output["objects"], track_ids)]
-        x, y = self.eyes_target.update(json_output["objects"], image)
+        x, y, target_id = self.eyes_target.update(json_output["objects"], image)
         json_output.update({'target_coordinates_xy': (x,y)})
+        json_output.update({'target_id': target_id})
 
         end_time = time.time()
         logging.debug("One detection event took {:.2f} seconds".format(end_time - start_time))
