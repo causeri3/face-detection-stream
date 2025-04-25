@@ -210,4 +210,4 @@ class EyesTarget:
         #     thickness=2
         # )
 
-        return self.target_x, self.target_y
+        return self.target_x, self.target_y, self.current_id
