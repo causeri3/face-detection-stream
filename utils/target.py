@@ -179,7 +179,7 @@ class EyesTarget:
                 if f['id'] == self.current_id:
                     # the center of that face's box
                     self.target_x = f['box']['x'] + f['box']['width'] / 2
-                    self.target_y = f['box']['y'] + f['box']['height'] / 2
+                    self.target_y = f['box']['y'] + f['box']['height'] / 3
                     break
 
         # for debugging
