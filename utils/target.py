@@ -18,7 +18,10 @@ import random
 import cv2
 import numpy as np
 
+from utils.args import get_args
 from utils.render import PINK
+
+args, unknown = get_args()
 
 
 class EyesTarget:
@@ -34,9 +37,9 @@ class EyesTarget:
         self.target_y = 0
 
         #_____________ Params to play with __________________ #
-        self.stare_min_time = 20 #sec
-        self.stare_max_time = 40 #sec
-        self.face_size_threshold = 0.25  # % of screen area
+        self.stare_min_time = args.min_seconds #sec, int
+        self.stare_max_time = args.max_seconds #sec, int
+        self.face_size_threshold = args.perc_close  # % of screen area, float
         self.pause_min_time = 1  # Minimum pause time in seconds
         self.pause_max_time = 3  # Maximum pause time in seconds
         #______________________________________________________ #

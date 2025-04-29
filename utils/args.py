@@ -27,6 +27,24 @@ def get_args():
                         default=0.05,
                         type=float,
                         help="""Threshold for IoU - Intersection over Union (float between 0 and 1)""")
+    parser.add_argument('-max',
+                        '--max-seconds',
+                        required=False,
+                        default=40,
+                        type=int,
+                        help="""Maximum amount of seconds to follow a face in BASIC_BITCH_STARE state""")
+    parser.add_argument('-min',
+                        '--min-seconds',
+                        required=False,
+                        default=20,
+                        type=int,
+                        help="""Minimum amount of seconds to follow a face in BASIC_BITCH_STARE state""")
+    parser.add_argument('-close',
+                        '--perc-close',
+                        required=False,
+                        default=.25,
+                        type=float,
+                        help="""% of screen which are considered a close face, if the bounding box fills it""")
 
     # to not get into trouble with uvicorn args
     args = parser.parse_known_args()
