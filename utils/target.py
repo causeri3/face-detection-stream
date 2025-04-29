@@ -200,14 +200,4 @@ class EyesTarget:
             thickness=2
         )
 
-        # cv2.putText(
-        #     image,
-        #     text="{}, {}".format(self.target_x, self.target_y),
-        #     org=(10, 100),
-        #     fontFace=cv2.FONT_HERSHEY_SIMPLEX,
-        #     fontScale=1.0,
-        #     color= PINK,
-        #     thickness=2
-        # )
-
-        return self.target_x, self.target_y, self.current_id
+        return self.target_x, self.target_y, self.current_id, self.state
