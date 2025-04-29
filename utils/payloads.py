@@ -93,3 +93,21 @@ def image_payload(detected_objects: Detections,
     return image_bytes_output
 
 
+def get_target_box_size(json_payload):
+    target_id = json_payload.get('target_id')
+
+    objects = json_payload.get('objects', [])
+    if not objects:
+        return None, None
+
+    if target_id is None:
+        # Default: use first object
+        obj = objects[0]
+    else:
+        # Find matching object
+        obj = next((o for o in objects if o.get('id') == target_id), None)
+        if obj is None:
+            return None, None
+
+    box = obj.get('box', {})
+    return box.get('width'), box.get('height')
