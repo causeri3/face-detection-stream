@@ -29,9 +29,10 @@ def hardware_movement_loop(target_lock, dict_payload):
             # string
             state = dict_payload['state']
             logging.debug(f"state: {state}")
-            # basic bitch floats
-            width, height = get_target_box_size(dict_payload)
-            logging.debug(f"width: {width}, height: {height}")
+            if dict_payload['target_id']:
+                # basic bitch floats
+                width, height = get_target_box_size(dict_payload)
+                logging.debug(f"width: {width}, height: {height}")
 
         # TODO: Do your thing, Mateo
         speed = 0.05
