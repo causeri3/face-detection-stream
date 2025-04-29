@@ -1,6 +1,8 @@
 import cv2
 import logging
 import numpy as np
+import time
+import _thread
 
 from utils.predict import Predict
 
@@ -60,7 +62,9 @@ class Stream:
             return json_payload
 
 
-    def draw_boxes(self):
+    def draw_boxes(self,
+                   target_lock:_thread.lock=None,
+                   dict_payload:dict = None):
 
         if not self.available_devices:
             self.available_devices = self.return_camera_indexes()
@@ -72,6 +76,7 @@ class Stream:
         cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
 
         while cap.isOpened():
+            start_time = time.time()
 
             # Read frame from the video
             ret, self.frame = cap.read()
@@ -87,4 +92,11 @@ class Stream:
             else:
                 json_payload = self.predict_n_stream()
                 logging.info(json_payload)
+
+            if target_lock:
+                with target_lock:
+                    dict_payload.clear()
+                    dict_payload.update(json_payload)
+
+            logging.info("Processing one frame took {:.2f} sec".format(time.time() - start_time))
 
