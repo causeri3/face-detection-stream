@@ -8,8 +8,8 @@ import logging
 args, unknown = get_args()
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 
-# For threading
-target_lock = threading.Lock()
+
+target_lock = threading.Lock() # to prevent race conditions
 dict_payload = {'objects': [], 'bbs': [], 'target_coordinates_xy': (.0, .0), 'target_id': None, 'state': 'NULL'}
 
 
@@ -42,3 +42,4 @@ numpy, PyTorch and maybe tensorflow which can circumvent the GIL via C/C++. So t
 I made the experience that it often runs faster. 
 Haven’t tested it here yet, though. So if shit is laggy, feel free to play with multiprocessing.
 """
+
