@@ -59,12 +59,12 @@ to
  `uv run main.py`
 
 * standard
- `python stream.py`
+ `python main.py`
 
 ### Args
 See all arguments:
-* with uv `uv run stream.py --help`
-* standard `python stream.py --help`
+* with uv `uv run main.py --help`
+* standard `python main.py --help`
 
 
 You can 
