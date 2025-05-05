@@ -23,7 +23,7 @@ if __name__ == "__main__":
     stream = Stream(
             see_detection=args.see_detection,
             available_devices = device)
-    #stream.draw_boxes()
+    # stream.draw_boxes(target_lock, dict_payload)
 
     movement_thread = threading.Thread(target=hardware_movement_loop, args=(target_lock, dict_payload))
     movement_thread.start()
@@ -42,4 +42,3 @@ numpy, PyTorch and maybe tensorflow which can circumvent the GIL via C/C++. So t
 I made the experience that it often runs faster. 
 Haven’t tested it here yet, though. So if shit is laggy, feel free to play with multiprocessing.
 """
-
