@@ -11,6 +11,7 @@ from PIL import Image
 from utils.payloads import json_payload, image_payload
 from utils.args import get_args
 from utils.target import EyesTarget
+from utils.no_tracking import SimpleTargetSelector
 
 args, unknown = get_args()
 
@@ -18,23 +19,27 @@ class Predict:
     def __init__(self,
                  repo_name: str ="arnabdhar/YOLOv8-Face-Detection",
                  model_file_name: str = "model.pt",
-                 # works way better than default, but takes a lot more compute
-                 embedder_deepsort: str | None = 'clip_RN50x16',
+                 # works better than default, but takes a lot more compute and still very jumpy
+                 embedder_deepsort: str | None = 'torchreid', #'clip_RN50x16'
                  # clip does not run via my silicon arch, dunno if there is a mps setting, set to true on Windows, see if it works
                  embedder_gpu: bool = False,
                  confidence_threshold: float = args.confidence_threshold,
-                 iou_threshold:float = args.iou_threshold):
+                 iou_threshold:float = args.iou_threshold,
+                 tracking:bool = args.no_tracking):
 
         self.confidence_threshold = confidence_threshold
         self.iou_threshold = iou_threshold
         self.repo_name= repo_name
         self.model_file_name = model_file_name
         self.model = self.load_model()
-
-        self.eyes_target = EyesTarget()
-        self.tracker = DeepSort(
-            #embedder=embedder_deepsort,
-            embedder_gpu = embedder_gpu)
+        self.tracking = tracking
+        if self.tracking:
+            self.eyes_target = EyesTarget()
+            self.tracker = DeepSort(
+                embedder=embedder_deepsort,
+                embedder_gpu = embedder_gpu)
+        else:
+            self.simple_target_selector = SimpleTargetSelector()
 
     def get_object_ids(self,
                 bbs: list[tuple[list, float, str]],
@@ -64,7 +69,6 @@ class Predict:
         model = YOLO(model_path)
         return model
 
-
     def predict(self,
                 image: np.ndarray,
                 return_image: bool = False):
@@ -85,12 +89,24 @@ class Predict:
         logging.debug("Detected {} objects".format(len(detected_objects)))
 
         json_output = json_payload(detected_objects)
-        track_ids = self.get_object_ids(json_output["bbs"], image)
-        [d.update({'id': i}) for d, i in zip(json_output["objects"], track_ids)]
-        x, y, target_id, state = self.eyes_target.update(json_output["objects"], image)
-        json_output.update({'target_coordinates_xy': (x,y)})
-        json_output.update({'target_id': target_id})
-        json_output.update({'state': state})
+        if self.tracking:
+            track_ids = self.get_object_ids(json_output["bbs"], image)
+            [d.update({'id': i}) for d, i in zip(json_output["objects"], track_ids)]
+            x, y, target_id, state = self.eyes_target.update(json_output["objects"], image)
+            json_output.update({
+                'target_coordinates_xy': (x, y),
+                'target_id': target_id,
+                'state': state
+            })
+
+        else:
+            x, y, state = self.simple_target_selector.update_target(json_output["objects"], image)
+            track_ids = [None]*len(json_output["objects"])
+            json_output.update({
+                'target_coordinates_xy': (x, y),
+                'target_id': None,
+                'state': state
+            })
 
         end_time = time.time()
         logging.debug("One detection event took {:.2f} seconds".format(end_time - start_time))
