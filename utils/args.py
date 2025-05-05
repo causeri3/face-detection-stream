@@ -14,7 +14,15 @@ def get_args():
                         required=False,
                         action='store_false',
                         help="""See object detection in streamed video output.
-                        If set to False, you only get the json payload (boolean)""")
+                        If argument in command, you only get the json payload (boolean)""")
+
+    parser.add_argument('-nt',
+                        '--no-tracking',
+                        required=False,
+                        action='store_false',
+                        help="""Use tracking to get target coordinates.
+                        If argument in command, you will not use any tracking""")
+
     parser.add_argument('-conf',
                         '--confidence-threshold',
                         required=False,
