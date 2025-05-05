@@ -4,3 +4,7 @@ supervision==0.25.1
 pillow==11.1.0
 deep-sort-realtime==1.3.2
 git+https://github.com/openai/CLIP.git
+torchreid==0.2.5
+gdown==5.2.0
+tensorboard==2.19.0
+
