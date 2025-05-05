@@ -47,6 +47,7 @@ class EyesTarget:
         self.state_start_time = time.time()
         self.state_duration = 0
         self.last_move_time = time.time()
+        self.random_walk_step_size = 0.05  # move step size 5% of screen width
 
 
     def _reset_state(self,
@@ -76,7 +77,7 @@ class EyesTarget:
             last_x = width / 2
             last_y = height / 2
         # move max 10% of width of screen / box
-        move_range = int(round(width * 0.1))
+        move_range = int(round(width * self.random_walk_step_size))
 
         current_time = time.time()
         time_since_last_move = current_time - self.last_move_time
