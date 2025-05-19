@@ -1,5 +1,13 @@
 # Follow Faces
 
+Code for [exhibition](https://www.pinakothek-der-moderne.de/ausstellungen/koennt-ihr-noch-kunst-und-demokratie/) "Könnt ihr noch?" - Deichkind 
+
+https://github.com/user-attachments/assets/c81b2e1d-2e2d-455c-9f70-76f5c569d89a
+
+<sub>Note: This code contains the CV/ML part. The code for the interface got implemented by the artist [monomvisual](https://github.com/monomvisual) - who build the head - inside movement.py.</sub>
+
+---
+
 ## Description
 * **Face detection** implemented for camera stream with YOLOv8 trained on faces by [arnabdhar](https://huggingface.co/arnabdhar/YOLOv8-Face-Detection)
 
