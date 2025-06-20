@@ -84,3 +84,4 @@ You can
 * close face threshold (% of the screen)
 * choose between tracking with deepsort or alternative approach without tracking
 ---
+This project is licensed under AGPL v3+
