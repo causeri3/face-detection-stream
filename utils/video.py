@@ -82,7 +82,9 @@ class Stream:
             ret, self.frame = cap.read()
 
             if not ret:
-                break
+                logging.warning("Failed to read frame. Retry...")
+                continue
+
             if self.see_detection:
                 image, json_payload = self.predict_n_stream()
                 cv2.imshow(window_name, image)
